@@ -11,7 +11,16 @@
 			update({type}) {
         console.log(type)
 				const el = document.createElement(`${type}`)
-        el?.setConfig?.(config)
+        if (config) {
+          const { grid_column, grid_row, ...rest } = config
+          el?.setConfig?.(rest)
+          if (grid_column) {
+            node.style['grid-column'] = grid_column
+          }
+          if (grid_row) {
+            node.style['grid-column'] = grid_column
+          }
+        }
         el.hass = hass
 				node.appendChild(el)
 			}
