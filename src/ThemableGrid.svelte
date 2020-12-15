@@ -1,14 +1,13 @@
 <svelte:options tag="themable-grid" />
 
 <script>
-  import { beforeUpdate } from 'svelte';
+  import { beforeUpdate, afterUpdate } from 'svelte';
   import Card from './Card.svelte'
 
   export let hass;
 
   let config
   export function setConfig (conf) {
-    console.log(conf)
     config = conf
     config = {
       ...conf,

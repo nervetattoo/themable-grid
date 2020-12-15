@@ -2,33 +2,43 @@
 
 <script>
 	export let type = 'div'
-  export let config;
+  export let config = {};
   export let hass;
 	
 	function uplift(node) {
 		// content will only be defined after the first render, so all logic can be done in update
 		return {
-			update({type}) {
-        console.log(type)
-				const el = document.createElement(`${type}`)
-        if (config) {
-          const { grid_column, grid_row, ...rest } = config
-          el?.setConfig?.(rest)
+			update({type, hass}) {
+        const { grid_column, grid_row, ...rest } = config
+
+        if (node?.firstChild?.tagName === type.toUpperCase()) {
+          node.firstChild.hass = hass
           if (grid_column) {
             node.style['grid-column'] = grid_column
           }
           if (grid_row) {
-            node.style['grid-column'] = grid_column
+            node.style['grid-row'] = grid_column
           }
+          return
+        }
+
+				const el = document.createElement(`${type}`)
+        el?.setConfig?.(rest)
+        if (typeof grid_column !== "undefined") {
+          node.style['grid-column'] = String(grid_column)
+        }
+        if (typeof grid_row !== "undefined") {
+          node.style['grid-row'] = String(grid_column)
         }
         el.hass = hass
-				node.appendChild(el)
+        /* node?.parentNode?.replaceChild(el, node) */
+        node?.replaceChildren(el)
 			}
 		}
 	}
 </script>
 
-<div use:uplift={{ type}}>
+<div use:uplift={{ type, hass }}>
 </div>
 
 <style>
