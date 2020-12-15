@@ -12,6 +12,7 @@
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "heresy": "^1.0.2",
+    "release-it": "^14.2.2",
     "rollup": "^2.34.2",
     "rollup-plugin-filesize": "^9.1.0",
     "rollup-plugin-json": "^4.0.0",
@@ -25,5 +26,17 @@
     "preact": "^10.5.7",
     "preact-custom-element": "^4.2.1",
     "svelte": "^3.31.0"
+  },
+  "release-it": {
+    "github": {
+      "release": true,
+      "assets": [
+        "themable-grid.*"
+      ]
+    },
+    "hooks": {
+      "before:init": "yarn build",
+      "after:release": "rm themable-grid.js"
+    }
   }
 }
