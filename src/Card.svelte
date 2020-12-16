@@ -1,6 +1,8 @@
 <svelte:options tag="themable-grid-card" />
 
 <script>
+  import { createCard } from "card-tools/src/lovelace-element";
+
 	export let type = 'div'
   export let config = {};
   export let hass;
@@ -22,8 +24,7 @@
           return
         }
 
-				const el = document.createElement(`${type}`)
-        el?.setConfig?.(rest)
+        const el = createCard(config)
         if (typeof grid_column !== "undefined") {
           node.style['grid-column'] = String(grid_column)
         }
@@ -31,7 +32,6 @@
           node.style['grid-row'] = String(grid_column)
         }
         el.hass = hass
-        /* node?.parentNode?.replaceChild(el, node) */
         node?.replaceChildren(el)
 			}
 		}
