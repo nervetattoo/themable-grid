@@ -45,6 +45,12 @@ cards:
 
 1. Part of what makes this experimental is that it is built using Svelte, because I wanted to test it out.
 2. All the cards will be wrapped in a div because I've yet to find a working way to avoid that for dynamic tag names in Svelte.
-3. Support for custom breakpoints is missing but on the todo
+3. ~Support for custom breakpoints is missing but on the todo~
 4. It probably breaks in a number of cases
 5. It requires a modern browser
+
+## Roadmap/ideas
+
+- [ ] Get rid of the wrapping div
+- [ ] Arbitrary number of breakpoints. Perhaps 2 breakpoints are enough for some yet 4 is better for other. 
+- [ ] UI editor. Can probably be based on the native grid one
