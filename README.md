@@ -4,6 +4,8 @@
 
 A responsive grid card that can be tweaked in your theme definition.
 
+![Demo](/screenshots/themable-grid-demo.gif)
+
 ## Installation
 
 [`Try HACS first`](https://hacs.xyz/)
