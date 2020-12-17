@@ -1,58 +1,60 @@
 <svelte:options tag="themable-grid" />
 
 <script>
-  import { onMount, beforeUpdate, afterUpdate } from 'svelte';
+  import { onMount, tick, afterUpdate } from 'svelte';
   import Card from './Card.svelte'
 
   export let hass;
 
-  let config
-  let bpClass = 'small'
-
-  export function setConfig (conf) {
-    config = conf
-    config = {
-      ...conf,
-        cards: conf.cards.map(card => {
-        let el
-        if (card.type.startsWith('custom:')) {
-          el = card.type.replace('custom:', '')
-        } else {
-          el = `hui-${card.type}-card`
-        }
-        return { ...card, _el: el }
-      })
-    }
+  const defaultConfig = {
+    padding: 0,
+    gap: '8px',
+    breakpoints: [
+      {
+        name: 'small',
+        mq: '(max-width: 767px)',
+        columns: 1,
+      }, {
+        name: 'medium',
+        mq: '(min-width: 768px) and (max-width: 1023px)',
+        columns: 2,
+      }, {
+        name: 'large',
+        mq: '(min-width: 1024px)',
+        columns: 3,
+      }
+    ]
   }
 
   $: selectedTheme = hass?.selectedTheme?.theme
   $: themes = hass?.themes
-  $: theme = themes?.themes?.[selectedTheme] ?? {
-    grid_col_s: 1,
-    grid_col_m: 2,
-    grid_col_l: 2,
-    grid_gap: '8px',
-    grid_padding: '8px',
+  $: theme = {
+    ...(themes?.themes?.[selectedTheme]?.themable_grid ?? {}),
   }
 
-  function handleBreakpoint (size) {
+  let config = {}
+  let columns = 1
+
+  $: data = { ...config, ...theme }
+
+  export function setConfig (conf = {}) {
+    config = { ...defaultConfig, ...conf }
+  }
+
+  function handleBreakpoint (cols, name) {
     return e => {
       if (e.matches) {
-        bpClass = size
+        columns = cols
       }
     }
   }
 
-  onMount(() => {
-    const breakpoints = {
-      small: theme?.['breakpoint-small'] ?? '(max-width: 768px)',
-      medium: theme?.['breakpoint-medium'] ?? '(min-width: 769px) and (max-width: 1024px)',
-      large: theme?.['breakpoint-large'] ?? '(min-width: 1025px)',
-    }
+  onMount(async () => {
+    await tick()
 
-    Object.entries(breakpoints).forEach(([name, mq]) => {
+    Object.values(data.breakpoints).forEach(({name, mq, columns}) => {
       const e = window.matchMedia(mq)
-      const fn = handleBreakpoint(name)
+      const fn = handleBreakpoint(columns, name)
       e.addListener(fn)
       fn(e)
     })
@@ -63,40 +65,25 @@
 <style>
   section {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(var(--columns, 1), 1fr);
     grid-gap: var(--gap, 8px);
     padding: var(--padding, 8px);
-  }
-
-  section.small {
-    grid-template-columns: repeat(var(--s-cols, 1), 1fr);
-  }
-  section.medium {
-    grid-template-columns: repeat(var(--m-cols, 1), 1fr);
-  }
-  section.large {
-    grid-template-columns: repeat(var(--l-cols, 1), 1fr);
   }
 </style>
 
 <main>
-  {#if config}
+  {#if data}
     <section 
-      class={bpClass}
       style="
-        --s-cols: {theme?.['grid_col_s'] ?? 1};
-        --m-cols: {theme?.['grid_col_m'] ?? 2};
-        --l-cols: {theme?.['grid_col_l'] ?? 3};
-        --gap: {theme?.['grid_gap'] ?? '8px'};
-        --padding: {theme?.['grid_padding'] ?? '8px'};
+        --columns: {columns};
+        --gap: {data.gap};
+        --padding: {data.padding};
     ">
-    {#each config.cards as card, index}
-      <Card
-        type={card._el}
-        hass={hass}
-        config={card}>
-      </Card>
+    {#if data.cards}
+    {#each data.cards as card, index}
+      <Card hass={hass} config={card}></Card>
     {/each}
+    {/if}
     </section>
   {/if}
 </main>

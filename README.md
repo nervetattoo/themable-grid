@@ -17,13 +17,26 @@ A responsive grid card that can be tweaked in your theme definition.
 
 It only supports the `cards` key to list cards. It has breakpoints defined for small/medium/large viewports and you can use the theme to specify the number of columns for each breakpoint.
 
+
+Define the configuration for the card in your theme as in this example.
+You can use an arbitrary number of breakpoints. This config replicates the defaults so really doesn't do anything
 ```yaml
 frontend:
   themes:
-    themable_grid:
-      columns-small: 2
-      columns-medium: 3
-      columns-large: 4
+    my_theme:
+      themable_grid:
+        padding: 0
+        gap: 8px
+        breakpoints:
+          - name: small
+            mq: (max-width: 767px)
+            columns: 1
+          - name: medium
+            mq: (min-width: 768px) and (max-width: 1023px)
+            columns: 2
+          - name: large
+            mq: (min-width: 1024px)
+            columns: 3
 ```
 
 There are sane defaults for 1/2/3 columns if nothing is specified, which is probably close to what most would want.

@@ -10,10 +10,10 @@
 	function uplift(node) {
 		// content will only be defined after the first render, so all logic can be done in update
 		return {
-			update({type, hass}) {
+			update({hass}) {
         const { grid_column, grid_row, ...rest } = config
 
-        if (node?.firstChild?.tagName === type.toUpperCase()) {
+        if (node?.firstChild?.tagName) {
           node.firstChild.hass = hass
           if (grid_column) {
             node.style['grid-column'] = grid_column
