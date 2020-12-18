@@ -2,35 +2,27 @@
 
 <script>
   import { createCard } from "card-tools/src/lovelace-element";
+  import applyStyles from "./applyStyles";
 
 	export let type = 'div'
   export let config = {};
   export let hass;
+  export let breakpoint;
 	
 	function uplift(node) {
 		// content will only be defined after the first render, so all logic can be done in update
 		return {
 			update({hass}) {
-        const { grid_column, grid_row, ...rest } = config
+        const { grid, ...rest } = config
+
+        applyStyles(node, grid, breakpoint)
 
         if (node?.firstChild?.tagName) {
           node.firstChild.hass = hass
-          if (grid_column) {
-            node.style['grid-column'] = grid_column
-          }
-          if (grid_row) {
-            node.style['grid-row'] = grid_column
-          }
           return
         }
 
-        const el = createCard(config)
-        if (typeof grid_column !== "undefined") {
-          node.style['grid-column'] = String(grid_column)
-        }
-        if (typeof grid_row !== "undefined") {
-          node.style['grid-row'] = String(grid_column)
-        }
+        const el = createCard(rest)
         el.hass = hass
         node?.replaceChildren(el)
 			}
@@ -42,11 +34,4 @@
 </div>
 
 <style>
-	div {
-		/* This removes the divs from the flow, so they do not have any effect on the layout */
-    display: block;
-    border: 1px solid green;
-    min-width: -webkit-fill-available;
-    padding: 16px 16px 0 16px;
-	}
 </style>

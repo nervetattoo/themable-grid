@@ -3,38 +3,20 @@
 <script>
   import { onMount, tick, afterUpdate } from 'svelte';
   import Card from './Card.svelte'
+  import defaultConfig from './defaultConfig.js'
 
   export let hass;
 
-  const defaultConfig = {
-    padding: 0,
-    gap: '8px',
-    breakpoints: [
-      {
-        name: 'small',
-        mq: '(max-width: 767px)',
-        columns: 1,
-      }, {
-        name: 'medium',
-        mq: '(min-width: 768px) and (max-width: 1023px)',
-        columns: 2,
-      }, {
-        name: 'large',
-        mq: '(min-width: 1024px)',
-        columns: 3,
-      }
-    ]
-  }
+  let wrapper
+  let config = {}
+  let columns = 1
+  let breakpoint
 
   $: selectedTheme = hass?.selectedTheme?.theme
   $: themes = hass?.themes
   $: theme = {
     ...(themes?.themes?.[selectedTheme]?.themable_grid ?? {}),
   }
-
-  let config = {}
-  let columns = 1
-
   $: data = { ...config, ...theme }
 
   export function setConfig (conf = {}) {
@@ -45,6 +27,7 @@
     return e => {
       if (e.matches) {
         columns = cols
+        breakpoint = name
       }
     }
   }
@@ -74,6 +57,7 @@
 <main>
   {#if data}
     <section 
+      bind:this={wrapper}
       style="
         --columns: {columns};
         --gap: {data.gap};
@@ -81,7 +65,12 @@
     ">
     {#if data.cards}
     {#each data.cards as card, index}
-      <Card hass={hass} config={card}></Card>
+      <Card
+        hass={hass}
+        config={card}
+        breakpoint={breakpoint}
+      >
+      </Card>
     {/each}
     {/if}
     </section>
