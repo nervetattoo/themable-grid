@@ -2,7 +2,7 @@
 
 > This is a work in progress experimental lovelace grid card replacement.
 
-A responsive grid card that can be tweaked in your theme definition.
+A responsive grid card that can be defined once per lovelace dashboard
 
 ![Demo](/screenshots/themable-grid-demo.gif)
 
@@ -16,7 +16,7 @@ A responsive grid card that can be tweaked in your theme definition.
 ## Configuration
 
 The `cards` key to list cards is required and the only needed config.
-You can configure the grid styling and breakpoints in your theme (recommended) or on the individual themable-grid card.
+You can configure the grid styling and breakpoints in your root lovelace config (recommended) or on the individual themable-grid card.
 You can either rely on the built-in breakpoints to get a 1-2-3 column setup for mobile-tablet-desktop or you can override with your own breakpoints.
 The default breakpoints will be named `mobile`, `tablet` and `desktop` to make the intention very clear. These names can be used to override styles for the individual cards on individual breakpoints.
 
@@ -31,26 +31,23 @@ cards:
     content: Third
 ```
 
-Define the configuration for the card in your theme as in this example.
+Define the configuration for the card in your root lovelace config as in this example.
 You can use an arbitrary number of breakpoints. This config shows the defaults if you don't supply a config.
 
 ```yaml
-frontend:
-  themes:
-    my_theme:
-      themable_grid:
-        padding: 0
-        gap: 8px
-        breakpoints:
-          - name: mobile
-            mq: (max-width: 767px)
-            columns: 1
-          - name: tablet
-            mq: (min-width: 768px) and (max-width: 1023px)
-            columns: 2
-          - name: desktop
-            mq: (min-width: 1024px)
-            columns: 3
+themable_grid:
+  padding: 0
+  gap: 8px
+  breakpoints:
+    - name: mobile
+      mq: (max-width: 767px)
+      columns: 1
+    - name: tablet
+      mq: (min-width: 768px) and (max-width: 1023px)
+      columns: 2
+    - name: desktop
+      mq: (min-width: 1024px)
+      columns: 3
 ```
 
 ### Tweaking specific cards

@@ -2,6 +2,7 @@
 
 <script>
   import { onMount, tick, afterUpdate } from 'svelte';
+  import { lovelace as getLovelace } from "card-tools/src/hass";
   import Card from './Card.svelte'
   import defaultConfig from './defaultConfig.js'
 
@@ -12,12 +13,11 @@
   let columns = 1
   let breakpoint
 
-  $: selectedTheme = hass?.selectedTheme?.theme
-  $: themes = hass?.themes
-  $: theme = {
-    ...(themes?.themes?.[selectedTheme]?.themable_grid ?? {}),
+  const lovelace = getLovelace()
+  $: data = {
+    ...config,
+    ...(lovelace?.config?.themable_grid ?? {}),
   }
-  $: data = { ...config, ...theme }
 
   export function setConfig (conf = {}) {
     config = { ...defaultConfig, ...conf }
