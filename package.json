@@ -9,23 +9,13 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "heresy": "^1.0.2",
     "release-it": "^14.2.2",
     "rollup": "^2.34.2",
-    "rollup-plugin-filesize": "^9.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-minify-html-literals": "^1.2.5",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-svelte": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-svelte": "^7.0.0"
   },
   "dependencies": {
     "card-tools": "thomasloven/lovelace-card-tools",
-    "htm": "^3.0.4",
-    "preact": "^10.5.7",
-    "preact-custom-element": "^4.2.1",
     "svelte": "^3.31.0"
   },
   "release-it": {
