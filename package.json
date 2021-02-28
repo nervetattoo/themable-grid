@@ -9,14 +9,14 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
     "release-it": "^14.2.2",
     "rollup": "^2.34.2",
-    "rollup-plugin-svelte": "^7.0.0"
+    "rollup-plugin-svelte": "^7.1.0"
   },
   "dependencies": {
     "card-tools": "thomasloven/lovelace-card-tools",
-    "svelte": "^3.31.0"
+    "svelte": "^3.37.0"
   },
   "release-it": {
     "github": {
