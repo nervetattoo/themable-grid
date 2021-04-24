@@ -15,8 +15,8 @@
 
   const lovelace = getLovelace()
   $: data = {
-    ...config,
     ...(lovelace?.config?.themable_grid ?? {}),
+    ...config,
   }
 
   export function setConfig (conf = {}) {
