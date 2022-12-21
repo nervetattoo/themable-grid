@@ -1,0 +1,22 @@
+name: Lint
+on: pull_request
+
+jobs:
+  Run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - run: yarn install
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          auto_fix: true
+          # Even if there are unfixable errors, fixes can be pushed
+          git_no_verify: true
+          prettier: true
+          eslint: true
+          eslint_args: --max-warnings 0
+          eslint_extensions: js,jsx,ts,tsx
