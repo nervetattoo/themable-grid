@@ -12,7 +12,7 @@ export default function applyStyles(node, styles, breakpoint) {
   if (isObject(styles)) {
     Object.entries(styles).forEach(([prop, value]) => {
       if (isObject(value)) {
-        if (value.hasOwnProperty(breakpoint)) {
+        if (Object.prototype.hasOwnProperty.call(value, breakpoint)) {
           setStyle(node, prop, value[breakpoint])
         }
       } else {
