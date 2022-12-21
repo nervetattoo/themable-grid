@@ -24,7 +24,10 @@
 
         const el = createCard(rest)
         el.hass = hass
-        node?.replaceChildren(el)
+        if (node) {
+          node.innerHTML = ''
+          node.appendChild(el)
+        }
 			}
 		}
 	}
