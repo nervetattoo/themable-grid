@@ -58,6 +58,7 @@ Style overrides are set on the `grid` prop, which accepts any CSS property with 
 Here are some examples
 
 #### Card spans all columns
+
 ```yaml
 type: 'custom:themable-grid'
 cards:
@@ -70,6 +71,7 @@ cards:
 ```
 
 #### Force card to start a new row on desktop
+
 ```yaml
 type: 'custom:themable-grid'
 cards:
@@ -91,6 +93,6 @@ cards:
 
 ## Roadmap/ideas
 
-- [x] Arbitrary number of breakpoints. Perhaps 2 breakpoints are enough for some yet 4 is better for other. 
+- [x] Arbitrary number of breakpoints. Perhaps 2 breakpoints are enough for some yet 4 is better for other.
 - [ ] Get rid of the wrapping div
 - [ ] UI editor. Can probably be based on the native grid one
