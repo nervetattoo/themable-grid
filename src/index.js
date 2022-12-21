@@ -1,4 +1,4 @@
-export { default as default } from './ThemableGrid.svelte';
+export { default as default } from './ThemableGrid.svelte'
 
 window.customCards = window.customCards || []
 window.customCards.push({
@@ -7,4 +7,3 @@ window.customCards.push({
   preview: false,
   description: 'Themable grid',
 })
-
